@@ -4,11 +4,12 @@ const IMAGE_CACHE = 'story-app-images-v1';
 
 // Assets to cache on install
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/styles/styles.css',
-  '/scripts/index.js',
-  '/manifest.json',
+  './',
+  './index.html',
+  './app.css',
+  './app.bundle.js',
+  './manifest.json',
+  './favicon.png',
 ];
 
 // Install event - cache static assets
@@ -123,8 +124,8 @@ self.addEventListener('push', (event) => {
   let notificationData = {
     title: 'Story App',
     body: 'You have a new notification',
-    icon: '/images/icon-192x192.png',
-    badge: '/images/icon-96x96.png',
+    icon: './images/icon-192x192.png',
+    badge: './images/icon-96x96.png',
     vibrate: [200, 100, 200],
     tag: 'story-notification',
     requireInteraction: false,
@@ -139,26 +140,26 @@ self.addEventListener('push', (event) => {
       notificationData = {
         title: data.title || 'New Story Added!',
         body: data.body || data.message || 'Someone shared a new story',
-        icon: data.icon || '/images/icon-192x192.png',
-        badge: '/images/icon-96x96.png',
+        icon: data.icon || './images/icon-192x192.png',
+        badge: './images/icon-96x96.png',
         image: data.image || null,
         vibrate: [200, 100, 200],
         tag: data.tag || 'story-notification',
         requireInteraction: false,
         data: {
-          url: data.url || '/#/home',
+          url: data.url || './#/home',
           storyId: data.storyId || null,
         },
         actions: [
           {
             action: 'view',
             title: 'View Story',
-            icon: '/images/icon-view.png'
+            icon: './images/icon-view.png'
           },
           {
             action: 'close',
             title: 'Close',
-            icon: '/images/icon-close.png'
+            icon: './images/icon-close.png'
           }
         ]
       };

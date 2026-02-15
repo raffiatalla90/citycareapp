@@ -30,6 +30,7 @@ export default class AddStoryPage {
                 name="description" 
                 required 
                 aria-required="true"
+                autocomplete="off"
                 rows="4"
                 placeholder="Tell your story..."
               ></textarea>

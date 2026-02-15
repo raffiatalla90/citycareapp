@@ -17,6 +17,7 @@ export default class RegisterPage {
                 name="name" 
                 required 
                 aria-required="true"
+                autocomplete="name"
                 placeholder="Enter your name"
               />
               <span class="error-message" id="name-error"></span>
@@ -30,6 +31,7 @@ export default class RegisterPage {
                 name="email" 
                 required 
                 aria-required="true"
+                autocomplete="email"
                 placeholder="Enter your email"
               />
               <span class="error-message" id="email-error"></span>
@@ -43,6 +45,7 @@ export default class RegisterPage {
                 name="password" 
                 required 
                 aria-required="true"
+                autocomplete="new-password"
                 minlength="8"
                 placeholder="Enter your password (min. 8 characters)"
               />

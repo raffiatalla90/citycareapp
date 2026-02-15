@@ -74,6 +74,7 @@ export default class HomePage {
             type="text" 
             id="story-filter" 
             placeholder="Search by description..."
+            autocomplete="off"
             aria-label="Filter stories by description"
           />
         </div>

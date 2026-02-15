@@ -17,6 +17,7 @@ export default class LoginPage {
                 name="email" 
                 required 
                 aria-required="true"
+                autocomplete="email"
                 placeholder="Enter your email"
               />
               <span class="error-message" id="email-error"></span>
@@ -30,6 +31,7 @@ export default class LoginPage {
                 name="password" 
                 required 
                 aria-required="true"
+                autocomplete="current-password"
                 minlength="8"
                 placeholder="Enter your password"
               />

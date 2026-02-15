@@ -23,6 +23,7 @@ export default class FavoritesPage {
               type="text" 
               id="search-favorites" 
               placeholder="Search by name or description..."
+              autocomplete="off"
               aria-label="Search favorite stories"
             />
           </div>

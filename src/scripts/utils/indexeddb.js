@@ -245,12 +245,13 @@ class IndexedDBManager {
     return new Promise((resolve, reject) => {
       const transaction = this.db.transaction(['offline-stories'], 'readonly');
       const store = transaction.objectStore('offline-stories');
-      const index = store.index('synced');
-      const request = index.getAll(false);
+      const request = store.getAll();
 
       request.onsuccess = () => {
-        console.log('Retrieved unsynced stories:', request.result.length);
-        resolve(request.result);
+        // Filter for unsynced stories
+        const unsyncedStories = request.result.filter(story => !story.synced);
+        console.log('Retrieved unsynced stories:', unsyncedStories.length);
+        resolve(unsyncedStories);
       };
 
       request.onerror = () => {

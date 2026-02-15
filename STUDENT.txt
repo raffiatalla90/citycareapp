@@ -41,6 +41,36 @@ KRITERIA 4: Aksesibilitas (4 pts - ADVANCE)
 ✓ Semua elemen interaktif dapat dioperasikan dengan keyboard
 ✓ ARIA attributes untuk accessibility
 
+SUBMISSION 2 - PWA FEATURES:
+
+KRITERIA 1: Mempertahankan Seluruh Kriteria Wajib Submission Sebelumnya (4 pts - ADVANCE)
+✓ Semua fitur submission 1 tetap berfungsi dengan baik
+
+KRITERIA 2: Menerapkan Push Notification (4 pts - ADVANCE)
+✓ Push notification dari server melalui service worker
+✓ Notifikasi dinamis (title, body, icon dari server)
+✓ Toggle button untuk enable/disable push notifications
+✓ Action navigation saat notifikasi diklik
+✓ Vibration dan badge support
+
+KRITERIA 3: Implementasi PWA dengan Dukungan Instalasi dan Mode Offline (4 pts - ADVANCE)
+✓ Installable app dengan Web App Manifest
+✓ Offline support dengan app shell dan cached data
+✓ Screenshots dan Shortcuts di manifest
+✓ Dynamic caching untuk API data dan images
+✓ Multiple caching strategies (Cache First, Network First, Stale-While-Revalidate)
+
+KRITERIA 4: Penerapan IndexedDB (4 pts - ADVANCE)
+✓ CRUD operations dengan favorites system
+✓ Search dan Sort favorites
+✓ Offline data creation dengan auto-sync
+✓ Background Sync untuk upload data saat online
+✓ Object stores: favorites dan offline-stories
+
+DEPLOYMENT:
+URL: https://raffiatalla90.github.io/citycareapp/
+Repository: https://github.com/raffiatalla90/citycareapp.git
+
 MAP SERVICE:
 - OpenStreetMap (no API key required)
 - Esri Satellite Imagery (no API key required)

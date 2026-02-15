@@ -1,6 +1,6 @@
 import CONFIG from '../config';
 
-const VAPID_PUBLIC_KEY = 'BN_sgx2Ps3Tsjw8sHo-1T0RS3ov3TJCzzRoJ2JKXbJmUVixDLBi7wRuLb0FCCaLCU-CdlDpGi0F3jI4swDNy1Yw';
+const VAPID_PUBLIC_KEY = 'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk';
 
 class PushNotificationManager {
   constructor() {
@@ -166,13 +166,9 @@ class PushNotificationManager {
     }
 
     try {
-      // In a real app, you would send this to your backend
-      // For this demo, we'll just log it
-      console.log('Subscription to save to server:', JSON.stringify(subscription));
+      console.log('Saving subscription to server:', JSON.stringify(subscription));
       
-      // Uncomment this if you have a backend endpoint
-      /*
-      const response = await fetch(`${CONFIG.BASE_URL}/push-subscription`, {
+      const response = await fetch(`${CONFIG.BASE_URL}/notifications/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -182,11 +178,15 @@ class PushNotificationManager {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save subscription to server');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to save subscription to server');
       }
-      */
+
+      const result = await response.json();
+      console.log('Subscription saved successfully:', result);
     } catch (error) {
       console.error('Failed to save subscription to server:', error);
+      throw error;
     }
   }
 

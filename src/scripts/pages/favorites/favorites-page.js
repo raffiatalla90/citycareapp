@@ -14,6 +14,8 @@ export default class FavoritesPage {
           <p>Browse and manage your favorite stories</p>
         </div>
 
+        <h2>Favorites Management</h2>
+
         <div class="favorites-controls">
           <div class="search-box">
             <label for="search-favorites">Search:</label>

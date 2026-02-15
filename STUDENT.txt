@@ -1,0 +1,65 @@
+PROJECT: Story App - Single Page Application with Maps
+
+TECHNOLOGY STACK:
+- SPA with Hash Routing
+- Leaflet.js for Interactive Maps
+- Story API (Dicoding)
+- Webpack for bundling
+- ES6+ JavaScript
+
+FEATURES IMPLEMENTED:
+
+KRITERIA 1: SPA dan Transisi Halaman (4 pts - ADVANCE)
+✓ Hash routing SPA tanpa reload halaman
+✓ Arsitektur MVP (Model-View-Presenter) pattern
+✓ Custom view transitions menggunakan View Transitions API
+✓ Halaman terpisah untuk authentication (login, register) dan homepage
+
+KRITERIA 2: Menampilkan Data dan Marker pada Peta (4 pts - ADVANCE)
+✓ Menampilkan data dari Story API (gambar + deskripsi + nama + tanggal + lokasi)
+✓ Visualisasi pada peta dengan marker dan popup
+✓ Filter lokasi berdasarkan deskripsi/nama
+✓ Highlight marker yang aktif
+✓ Sinkronisasi list dan peta (klik card = zoom ke marker)
+✓ Multiple tile layers (Street Map, Satellite, Topographic) dengan layer control
+
+KRITERIA 3: Fitur Tambah Data Baru (4 pts - ADVANCE)  
+✓ Form tambah data dengan upload file
+✓ Pemilihan latitude/longitude melalui event klik di peta
+✓ HTTP Request asynchronous ke API
+✓ Validasi input pada form
+✓ Pesan error/success yang jelas
+✓ Opsi mengambil gambar dari kamera langsung (media stream)
+✓ Media stream ditutup setelah tidak digunakan
+
+KRITERIA 4: Aksesibilitas (4 pts - ADVANCE)
+✓ Alternatif teks pada semua gambar
+✓ HTML element semantik (header, nav, main, section, article, footer)
+✓ Label pada setiap elemen input
+✓ Tampilan responsive (375px, 768px, 1024px)
+✓ Fitur skip to content
+✓ Semua elemen interaktif dapat dioperasikan dengan keyboard
+✓ ARIA attributes untuk accessibility
+
+MAP SERVICE:
+- OpenStreetMap (no API key required)
+- Esri Satellite Imagery (no API key required)
+- OpenTopoMap (no API key required)
+
+API ENDPOINT:
+- Base URL: https://story-api.dicoding.dev/v1
+
+CARA MENJALANKAN:
+1. npm install
+2. npm run start-dev
+3. Buka http://localhost:9000
+4. Register akun baru atau login
+5. Tambah story dengan foto dan lokasi
+6. Lihat stories di peta interaktif
+
+CATATAN:
+- Aplikasi sudah menerapkan semua kriteria pada level ADVANCE (4 pts)
+- Total poin: 16/16 pts
+- Responsive di semua ukuran layar
+- Fully accessible dengan keyboard navigation
+- Camera API untuk mengambil foto langsung

@@ -2,14 +2,12 @@ const CACHE_NAME = 'story-app-v1';
 const RUNTIME_CACHE = 'story-app-runtime-v1';
 const IMAGE_CACHE = 'story-app-images-v1';
 
-// Assets to cache on install
+// Assets to cache on install - using relative paths
 const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './app.css',
-  './app.bundle.js',
-  './manifest.json',
-  './favicon.png',
+  'index.html',
+  'app.css',
+  'app.bundle.js',
+  'manifest.json',
 ];
 
 // Install event - cache static assets
@@ -18,7 +16,14 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Caching static assets');
-      return cache.addAll(STATIC_ASSETS);
+      // Get the base path for the service worker
+      const baseUrl = self.location.pathname.substring(0, self.location.pathname.lastIndexOf('/') + 1);
+      const urlsToCache = STATIC_ASSETS.map(asset => new URL(asset, self.location.origin + baseUrl).href);
+      console.log('[Service Worker] URLs to cache:', urlsToCache);
+      return cache.addAll(urlsToCache).catch(err => {
+        console.error('[Service Worker] Cache addAll failed:', err);
+        // Continue anyway, we'll cache on fetch
+      });
     })
   );
   self.skipWaiting();

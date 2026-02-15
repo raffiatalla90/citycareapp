@@ -166,7 +166,16 @@ class PushNotificationManager {
     }
 
     try {
-      console.log('Saving subscription to server:', JSON.stringify(subscription));
+      // Convert subscription to JSON and sanitize (remove expirationTime and other unnecessary properties)
+      const subscriptionJson = subscription.toJSON();
+      
+      // Create payload with only required properties for Dicoding API
+      const payload = {
+        endpoint: subscriptionJson.endpoint,
+        keys: subscriptionJson.keys, // Contains 'auth' and 'p256dh'
+      };
+      
+      console.log('Saving subscription to server:', payload);
       
       const response = await fetch(`${CONFIG.BASE_URL}/notifications/subscribe`, {
         method: 'POST',
@@ -174,16 +183,17 @@ class PushNotificationManager {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(subscription),
+        body: JSON.stringify(payload), // Send only sanitized payload
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to save subscription to server');
+        throw new Error(errorData.message || `Failed to save subscription to server (${response.status})`);
       }
 
       const result = await response.json();
       console.log('Subscription saved successfully:', result);
+      return result;
     } catch (error) {
       console.error('Failed to save subscription to server:', error);
       throw error;

@@ -72,16 +72,20 @@ self.addEventListener('fetch', (event) => {
 async function networkFirstStrategy(request) {
   try {
     const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
+    // Only cache GET requests (POST, PUT, DELETE cannot be cached)
+    if (networkResponse.ok && request.method === 'GET') {
       const cache = await caches.open(RUNTIME_CACHE);
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
     console.log('[Service Worker] Network request failed, trying cache:', error);
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
+    // Only try cache for GET requests
+    if (request.method === 'GET') {
+      const cachedResponse = await caches.match(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
     }
     throw error;
   }
@@ -109,6 +113,11 @@ async function cacheFirstStrategy(request, cacheName) {
 
 // Stale-while-revalidate strategy
 async function staleWhileRevalidateStrategy(request) {
+  // Only use caching for GET requests
+  if (request.method !== 'GET') {
+    return fetch(request);
+  }
+
   const cache = await caches.open(RUNTIME_CACHE);
   const cachedResponse = await caches.match(request);
 

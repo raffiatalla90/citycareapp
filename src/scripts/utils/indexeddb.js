@@ -320,7 +320,8 @@ class IndexedDBManager {
       const transaction = this.db.transaction(['offline-stories'], 'readwrite');
       const store = transaction.objectStore('offline-stories');
       const index = store.index('synced');
-      const request = index.openCursor(true);
+      const range = IDBKeyRange.only(true); // Only get synced stories
+      const request = index.openCursor(range);
 
       request.onsuccess = (event) => {
         const cursor = event.target.result;

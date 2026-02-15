@@ -1,5 +1,5 @@
 const DB_NAME = 'StoryAppDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2; // Increment version to force schema upgrade
 
 class IndexedDBManager {
   constructor() {
@@ -24,7 +24,8 @@ class IndexedDBManager {
 
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        console.log('Upgrading IndexedDB schema...');
+        const oldVersion = event.oldVersion;
+        console.log(`Upgrading IndexedDB schema from version ${oldVersion} to ${DB_VERSION}...`);
 
         // Create object stores if they don't exist
         
@@ -45,6 +46,17 @@ class IndexedDBManager {
           offlineStore.createIndex('createdAt', 'createdAt', { unique: false });
           offlineStore.createIndex('synced', 'synced', { unique: false });
           console.log('Created offline-stories object store');
+        } else if (oldVersion < 2) {
+          // Recreate indexes to fix potential corruption
+          const transaction = event.target.transaction;
+          const offlineStore = transaction.objectStore('offline-stories');
+          
+          // Delete and recreate indexes if they exist
+          if (offlineStore.indexNames.contains('synced')) {
+            offlineStore.deleteIndex('synced');
+          }
+          offlineStore.createIndex('synced', 'synced', { unique: false });
+          console.log('Recreated synced index');
         }
       };
     });

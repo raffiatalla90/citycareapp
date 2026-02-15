@@ -63,10 +63,13 @@ export default class AddStoryPage {
             </div>
             
             <div class="form-group">
-              <label for="location-map">Location (Click on map to select)</label>
+              <label for="location-map">Location</label>
+              <button type="button" id="detect-location-button" class="btn-secondary">
+                📍 Detect My Location
+              </button>
               <div id="location-map" class="location-map"></div>
               <p class="location-info">
-                Selected: <span id="selected-coords">Click on map to select location</span>
+                Selected: <span id="selected-coords">Click on map or detect your location</span>
               </p>
               <span class="error-message" id="location-error"></span>
             </div>
@@ -91,6 +94,7 @@ export default class AddStoryPage {
       shadowSize: [41, 41],
     });
     this._initializeMap();
+    this._setupLocationDetection();
     this._setupPhotoInput();
     this._setupCamera();
     this._setupForm();
@@ -139,6 +143,65 @@ export default class AddStoryPage {
     
     // Clear error
     document.getElementById('location-error').textContent = '';
+  }
+
+  _setupLocationDetection() {
+    const detectButton = document.getElementById('detect-location-button');
+    
+    detectButton.addEventListener('click', () => {
+      detectButton.disabled = true;
+      detectButton.textContent = '📍 Detecting...';
+      
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by your browser');
+        detectButton.disabled = false;
+        detectButton.textContent = '📍 Detect My Location';
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          
+          // Set location on map
+          this._selectLocation(lat, lon);
+          
+          // Center map on detected location
+          this.#map.setView([lat, lon], 13);
+          
+          detectButton.disabled = false;
+          detectButton.textContent = '📍 Detect My Location';
+          
+          announceToScreenReader(`Location detected: ${lat.toFixed(6)}, ${lon.toFixed(6)}`);
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          let errorMessage = 'Unable to detect location';
+          
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = 'Location permission denied. Please enable location access.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = 'Location information unavailable.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = 'Location request timed out.';
+              break;
+          }
+          
+          document.getElementById('location-error').textContent = errorMessage;
+          detectButton.disabled = false;
+          detectButton.textContent = '📍 Detect My Location';
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    });
   }
 
   _setupPhotoInput() {

@@ -203,13 +203,25 @@ export default class HomePage {
       return;
     }
 
-    storiesList.innerHTML = stories.map(story => `
+    storiesList.innerHTML = stories.map(story => {
+      const uploadDate = new Date(story.createdAt);
+      const dateStr = uploadDate.toLocaleDateString('id-ID', { 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+      });
+      const timeStr = uploadDate.toLocaleTimeString('id-ID', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+      
+      return `
       <article class="story-card" data-story-id="${story.id}" tabindex="0" role="button" aria-label="View story by ${story.name}">
         <img src="${story.photoUrl}" alt="Photo for story: ${story.description.substring(0, 50)}..." />
         <div class="story-content">
           <h3>${story.name}</h3>
           <p>${story.description}</p>
-          <p class="story-date">${new Date(story.createdAt).toLocaleDateString()}</p>
+          <p class="story-date">🕐 ${dateStr} - ${timeStr}</p>
           ${story.lat && story.lon ? 
             `<p class="story-location">📍 ${story.lat.toFixed(4)}, ${story.lon.toFixed(4)}</p>` : 
             '<p class="story-location">No location</p>'
@@ -224,7 +236,8 @@ export default class HomePage {
           ⭐
         </button>
       </article>
-    `).join('');
+    `;
+    }).join('');
 
     // Add click handlers for story cards (for sync - Skilled criteria)
     storiesList.querySelectorAll('.story-card').forEach(card => {

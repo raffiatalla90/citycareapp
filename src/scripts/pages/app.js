@@ -37,8 +37,15 @@ class App {
 
   async renderPage() {
     const url = getActiveRoute();
-    const page = routes[url];
+    console.log('Rendering route:', url);
+    const page = routes[url] || routes['/'];
+    console.log('Page instance:', page);
     const transitionDuration = 250;
+
+    if (!page) {
+      console.error(`No route found for ${url}`);
+      return;
+    }
 
     // Custom view transitions (Advance criteria for Kriteria 1)
     if (document.startViewTransition) {

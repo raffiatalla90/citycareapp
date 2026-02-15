@@ -99,17 +99,33 @@ async function initializePWA() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('DOM Content Loaded');
+  
   // Initialize PWA features
   await initializePWA();
 
-  const app = new App({
-    content: document.querySelector('#main-content'),
-    drawerButton: document.querySelector('#drawer-button'),
-    navigationDrawer: document.querySelector('#navigation-drawer'),
+  const contentElement = document.querySelector('#main-content');
+  const drawerButtonElement = document.querySelector('#drawer-button');
+  const navigationDrawerElement = document.querySelector('#navigation-drawer');
+  
+  console.log('Elements found:', {
+    content: !!contentElement,
+    drawerButton: !!drawerButtonElement,
+    navigationDrawer: !!navigationDrawerElement
   });
+
+  const app = new App({
+    content: contentElement,
+    drawerButton: drawerButtonElement,
+    navigationDrawer: navigationDrawerElement,
+  });
+  
+  console.log('App initialized, rendering page...');
   await app.renderPage();
+  console.log('Initial page rendered');
 
   window.addEventListener('hashchange', async () => {
+    console.log('Hash changed to:', location.hash);
     await app.renderPage();
   });
 });
